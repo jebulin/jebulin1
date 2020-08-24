@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from .decorators import *
 
 
-
 @unauthenticated_user
 def registerPage(request):
     form = CreateUserForm()
@@ -57,7 +56,7 @@ def userPage(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['customer'])
+@allowed_users(allowed_roles=['customer', 'admin'])
 def accountSettings(request):
     customer1 = request.user.customer
     form = CustomerForm(instance=customer1)

@@ -4,14 +4,17 @@ from django.contrib.auth.models import User
 
 class Customer(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    name = models.CharField(null=True, max_length=200)
+    name = models.CharField(null=True, max_length=200, blank=True)
     phone = models.CharField(null=True, max_length=200)
     email = models.CharField(null=True, max_length=200)
     profile_pic = models.ImageField(null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return self.name
+        if self.name:
+            return self.name
+        else:
+            return "noName"
 
 
 class Tag(models.Model):
@@ -48,4 +51,7 @@ class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(null=True, choices=STATUS, max_length=200)
+
+    def __str__(self):
+        return self.product.name
 # Create your models here.
